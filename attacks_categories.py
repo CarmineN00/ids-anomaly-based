@@ -1,0 +1,42 @@
+dos_attacks = ['apache2',
+'back',
+'land',
+'neptune',
+'mailbomb',
+'pod',
+'processtable',
+'smurf',
+'teardrop',
+'udpstorm',
+'worm']
+
+probe_attacks = ['ipsweep',
+'mscan',
+'nmap',
+'portsweep',
+'saint',
+'satan']
+
+u2r_attacks = ['buffer_overflow',
+'loadmdoule',
+'perl',
+'ps',
+'rootkit',
+'sqlattack',
+'xterm']
+
+r2l_attacks = ['ftp_write',
+'guess_passwd',
+'http_tunnel',
+'imap',
+'multihop',
+'named',
+'phf',
+'sendmail',
+'snmpgetattack',
+'snmpguess',
+'spy',
+'warezclient',
+'warezmaster',
+'xclock',
+'xsnoop']
