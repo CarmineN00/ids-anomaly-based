@@ -39,5 +39,9 @@ features = (['duration',
 'dst_host_srv_serror_rate',
 'dst_host_rerror_rate',
 'dst_host_srv_rerror_rate',
-'outcome',
+'labels',
 'level'])
+
+features_to_encode = ['protocol_type',
+'service',
+ 'flag']
