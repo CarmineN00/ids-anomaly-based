@@ -4,6 +4,7 @@ import pandas as pd
 from dataset_features import features, features_to_encode
 from attacks_categories import u2r_attacks, r2l_attacks, dos_attacks, probe_attacks
 from sklearn.preprocessing import MinMaxScaler
+from utility import get_dataset_path
 
 def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetType):
 
@@ -34,20 +35,32 @@ def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetTyp
     df['src_bytes'] = df['src_bytes'].apply(lambda x: np.log1p(x) if x > 0 else 0)
     df['dst_bytes'] = df['dst_bytes'].apply(lambda x: np.log1p(x) if x > 0 else 0)
 
+    #setting the features to scale (all except labels)
+    columns_to_scale = df.columns[:-1]
+    columns_to_exclude = ['labels']
+    features_to_scale = df[columns_to_scale]
+    features_to_exclude = df[columns_to_exclude]
+    
     #normalize data between 0 and 1
     scaler = MinMaxScaler()
-    df = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
+    df = pd.DataFrame(scaler.fit_transform(features_to_scale), columns=columns_to_scale)
+
+    # Reset indices before concatenating to avoid NaN values
+    df.reset_index(drop=True, inplace=True)
+    features_to_exclude.reset_index(drop=True, inplace=True)
+
+    df = pd.concat([df, features_to_exclude], axis=1)
 
     #conversion of dataframe to txt
-    df.to_csv(pathWriteNewDS + "KDD" + datasetType + "OnlyDoSProbe", index=False, header=False)
+    df.to_csv(pathWriteNewDS + "KDD" + datasetType + "OnlyDoSProbe", index=False)
 
 
 #get current work directory
 cwd = os.getcwd()
 
 #set dataset train and test path
-pathDSTrain = cwd + "\\NSL-KDD\\KDDTrain+.txt"
-pathDSTest = cwd + "\\NSL-KDD\\KDDTest+.txt"
+pathDSTrain = get_dataset_path("Train")
+pathDSTest = get_dataset_path("Test")
 
 #set dataset path where to write modified dataset
 pathWriteNewDS = cwd + "\\NSL-KDD\\"
