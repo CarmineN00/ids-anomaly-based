@@ -45,22 +45,23 @@ def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetTyp
     scaler = MinMaxScaler()
     df = pd.DataFrame(scaler.fit_transform(features_to_scale), columns=columns_to_scale)
 
-    # Reset indices before concatenating to avoid NaN values
+    #reset indices before concatenating to avoid NaN values
     df.reset_index(drop=True, inplace=True)
     features_to_exclude.reset_index(drop=True, inplace=True)
 
     df = pd.concat([df, features_to_exclude], axis=1)
+    df = df[df['labels'] != -1]
 
     #conversion of dataframe to txt
     df.to_csv(pathWriteNewDS + "KDD" + datasetType + "OnlyDoSProbe", index=False)
 
 
-#get current work directory
-cwd = os.getcwd()
-
 #set dataset train and test path
 pathDSTrain = get_dataset_path("Train")
 pathDSTest = get_dataset_path("Test")
+
+#get current work directory
+cwd = os.getcwd()
 
 #set dataset path where to write modified dataset
 pathWriteNewDS = cwd + "\\NSL-KDD\\"
