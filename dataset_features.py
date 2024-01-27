@@ -45,3 +45,21 @@ features = (['duration',
 features_to_encode = ['protocol_type',
 'service',
  'flag']
+
+important_features = (['src_bytes', 
+'same_srv_rate',
+'flag',
+'diff_srv_rate',
+'dst_bytes',
+'count',
+'dst_host_serror_rate',
+'dst_host_diff_srv_rate',
+'serror_rate',
+'dst_host_same_srv_rate',
+'dst_host_srv_serror_rate',
+'dst_host_same_src_port_rate',
+'srv_serror_rate', 
+'protocol_type',
+'srv_count',
+'labels'])
+
