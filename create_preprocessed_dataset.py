@@ -6,7 +6,7 @@ from attacks_categories import u2r_attacks, r2l_attacks, dos_attacks, probe_atta
 from sklearn.preprocessing import MinMaxScaler
 from utility import get_dataset_path
 
-#this func create a dataset encoded, normalized and without u2r-r2l attack (to reduce overfitting)
+#this func create a dataset encoded, normalized and without u2r-r2l attack (to reduce overfitting) with all 41 features
 def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetType):
 
     #read data
@@ -29,8 +29,8 @@ def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetTyp
     df[features_to_encode] = df[features_to_encode].astype('category').apply(lambda x: x.cat.codes)
 
     #encode labels
-    custom_mapping_for_labels = {'normal': 0, 'dos_attack': 1, 'probe_attack': 2}
-    df['labels'] = pd.Categorical(df['labels'], categories=custom_mapping_for_labels.keys()).codes
+    mapping_for_labels = {'normal': 0, 'dos_attack': 1, 'probe_attack': 2}
+    df['labels'] = pd.Categorical(df['labels'], categories=mapping_for_labels.keys()).codes
 
     #handling outlier of features src_bytes and dst_bytes with loge
     df['src_bytes'] = df['src_bytes'].apply(lambda x: np.log1p(x) if x > 0 else 0)
@@ -57,6 +57,7 @@ def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetTyp
     df.to_csv(pathWriteNewDS + "KDD" + datasetType + "OnlyDoSProbe", index=False)
     print("dataset creato con successo")
 
+#this func create a dataset with only 15 most importat features selected by Random Forest, dataset to pass: OnlyDoSProbe
 def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_type):
     df = pd.read_csv(datasetPath)
     df.columns = features[ : -1]
@@ -66,12 +67,22 @@ def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_
     df.to_csv(pathWriteNewDS + "KDD" + dataset_type + "ImportantFeatures", index=False)
     print("dataset creato con successo")
 
-#set dataset train and test path
-'''pathDSTrain = get_dataset_path("Train")
-pathDSTest = get_dataset_path("Test")'''
+#this func create a dataset with 0-1 lables for binary classification, dataset to pass: OnlyDoSProbe or ImportantFeatures
+def create_dataset_with_binary_labels(datasetPath, pathWriteNewDS, dataset_type, category):
+    df = pd.read_csv(datasetPath)
+    last_column = df.columns[-1]
+    df[last_column] = df[last_column].replace(2, 1)
+    df.to_csv(pathWriteNewDS + "KDD" + dataset_type + "Binary" + category , index=False)
 
-pathDSTrain = get_dataset_path("TrainOnlyDoSProbe")
-pathDSTest = get_dataset_path("TestOnlyDoSProbe")
+
+'''pathRawTrain = get_dataset_path("Train")
+pathRawTest = get_dataset_path("Test")'''
+
+pathODPTrain = get_dataset_path("TrainOnlyDoSProbe")
+pathODPTest = get_dataset_path("TestOnlyDoSProbe")
+
+pathIFTrain = get_dataset_path("TrainImportantFeatures")
+pathIFTest = get_dataset_path("TestImportantFeatures")
 
 #get current work directory
 cwd = os.getcwd()
@@ -79,9 +90,15 @@ cwd = os.getcwd()
 #set dataset path where to write modified dataset
 pathWriteNewDS = cwd + "\\NSL-KDD\\"
 
-'''create_dataset_only_dos_probe_attack(pathDSTrain,pathWriteNewDS, "Train")
-create_dataset_only_dos_probe_attack(pathDSTest,pathWriteNewDS, "Test")'''
+'''create_dataset_only_dos_probe_attack(pathRawTrain,pathWriteNewDS, "Train")
+create_dataset_only_dos_probe_attack(pathRawTest,pathWriteNewDS, "Test")'''
 
-create_dataset_with_important_features(pathDSTrain,pathWriteNewDS, "Train")
-create_dataset_with_important_features(pathDSTest,pathWriteNewDS, "Test")
+'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train")
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test")'''
+
+create_dataset_with_binary_labels(pathODPTrain,pathWriteNewDS, "Train", "OnlyDoSProbe")
+create_dataset_with_binary_labels(pathODPTest,pathWriteNewDS, "Test", "OnlyDoSProbe")
+
+create_dataset_with_binary_labels(pathIFTrain,pathWriteNewDS, "Train", "ImportantFeatures")
+create_dataset_with_binary_labels(pathIFTest,pathWriteNewDS, "Test", "ImportantFeatures")
 

@@ -6,11 +6,17 @@ from Models.drnn import DeepRecurrentNeuralNetwork
 from Models.svm import SVM
 
 #test accuracy on dataset with all features
-pathDSTrain = get_dataset_path("TrainOnlyDoSProbe")
-pathDSTest = get_dataset_path("TestOnlyDoSProbe")
+'''pathDSTrain = get_dataset_path("TrainOnlyDoSProbe")
+pathDSTest = get_dataset_path("TestOnlyDoSProbe")'''
 #test accuracy on dataset with the 15 most important features selected by random forest
-pathDSTrain = get_dataset_path("ImportantFeatures")
-pathDSTest = get_dataset_path("ImportantFeatures")
+'''pathDSTrain = get_dataset_path("TrainImportantFeatures")
+pathDSTest = get_dataset_path("TestImportantFeatures")'''
+#test binary accuracy on dataset with all features
+pathDSTrain = get_dataset_path("TrainBinaryOnlyDoSProbe")
+pathDSTest = get_dataset_path("TestBinaryOnlyDoSProbe")
+#test binary accuracy on dataset with the 15 most important features selected by random forest
+'''pathDSTrain = get_dataset_path("TrainBinaryImportantFeatures")
+pathDSTest = get_dataset_path("TestBinaryImportantFeatures")'''
 
 #get train and test set
 x_train , y_train = get_dataframe_split(pathDSTrain)
@@ -32,20 +38,23 @@ pnn.train(x_train, y_train, epochs=10, batch_size=32)
 pnn_accuracy = pnn.evaluate(x_test, y_test, verbose=0)
 print(f"Accuracy on test set with PNN: {pnn_accuracy * 100:.2f}%")'''
 
+#for binary classification -> num_class:1, activation: sigmoid, loss_fun: binary_crossentropy
+#for multiclass classification -> num_class: 3, activation: softmax, loss_fun: sparse_categorical_crossentropy
+
 #test snn 
-snn = SequentialNeuralNetwork(x_train.shape[1],num_classes=3)
+snn = SequentialNeuralNetwork(x_train.shape[1], num_classes=1, activation="sigmoid", loss_fun="binary_crossentropy")
 snn.train(x_train, y_train, epochs=5, batch_size=32)
 ssn_accuracy = snn.evaluate(x_test, y_test, verbose=0)
 print(f"Accuracy on test set with SNN: {ssn_accuracy * 100:.2f}%")
 
 #test rnn 
-rnn = RecurrentNeuralNetwork(x_train.shape[1], num_classes=3)
+rnn = RecurrentNeuralNetwork(x_train.shape[1], num_classes=1, activation="sigmoid", loss_fun="binary_crossentropy")
 rnn.train(x_train_reshaped, y_train, epochs=5, batch_size=32)
 rnn_accuracy = rnn.evaluate(x_test_reshaped, y_test, verbose=0)
 print(f"Accuracy on test set with RNN: {rnn_accuracy * 100:.2f}%")
 
 #test drnn
-drnn = DeepRecurrentNeuralNetwork(x_train.shape[1], num_classes=3)
+drnn = DeepRecurrentNeuralNetwork(x_train.shape[1], num_classes=1, activation="sigmoid", loss_fun="binary_crossentropy")
 drnn.train(x_train_reshaped, y_train, epochs=5, batch_size=32)
 drnn_accuracy = drnn.evaluate(x_test_reshaped, y_test, verbose=0)
 print(f"Accuracy on test set with DRNN: {drnn_accuracy * 100:.2f}%")
