@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
+import shap
 
 class DeepRecurrentNeuralNetwork:
     def __init__(self, input_dim, num_classes, activation, loss_fun):
@@ -25,3 +26,8 @@ class DeepRecurrentNeuralNetwork:
     def evaluate(self, x_test_reshaped, y_test, verbose):
         accuracy = self.model.evaluate(x_test_reshaped, y_test, verbose=verbose)[1]
         return accuracy
+    
+    def plot_important_features(self, x_test, class_index):
+        explainer = shap.KernelExplainer(self.model.predict,x_test)
+        shap_values = explainer.shap_values(x_test)
+        shap.summary_plot(shap_values[class_index], x_test, class_names=["Normale", "DoS", "Probe"], max_display=x_test.shape[1])

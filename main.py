@@ -1,9 +1,10 @@
 from utility import get_dataset_path, get_dataframe_split
 from Models.pnn import ProbabilisticNeuralNetwork
+from Models.svm import SVM
 from Models.snn import SequentialNeuralNetwork
 from Models.rnn import RecurrentNeuralNetwork
 from Models.drnn import DeepRecurrentNeuralNetwork
-from Models.svm import SVM
+
 
 #test accuracy on dataset with all features
 '''pathDSTrain = get_dataset_path("TrainOnlyDoSProbe")
@@ -12,11 +13,11 @@ pathDSTest = get_dataset_path("TestOnlyDoSProbe")'''
 '''pathDSTrain = get_dataset_path("TrainImportantFeatures")
 pathDSTest = get_dataset_path("TestImportantFeatures")'''
 #test binary accuracy on dataset with all features
-pathDSTrain = get_dataset_path("TrainBinaryOnlyDoSProbe")
-pathDSTest = get_dataset_path("TestBinaryOnlyDoSProbe")
+'''pathDSTrain = get_dataset_path("TrainBinaryOnlyDoSProbe")
+pathDSTest = get_dataset_path("TestBinaryOnlyDoSProbe")'''
 #test binary accuracy on dataset with the 15 most important features selected by random forest
-'''pathDSTrain = get_dataset_path("TrainBinaryImportantFeatures")
-pathDSTest = get_dataset_path("TestBinaryImportantFeatures")'''
+pathDSTrain = get_dataset_path("TrainBinaryImportantFeatures")
+pathDSTest = get_dataset_path("TestBinaryImportantFeatures")
 
 #get train and test set
 x_train , y_train = get_dataframe_split(pathDSTrain)

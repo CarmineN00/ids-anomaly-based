@@ -43,6 +43,6 @@ plt.xticks(rotation=45, ha='right')  # Rotare i nomi delle feature per una migli
 plt.tight_layout()
 
 # save chart as png
-plt.savefig('random_forest_feature_importance.png')'''
+plt.savefig('random_forest_features_importance.png')'''
 
 
