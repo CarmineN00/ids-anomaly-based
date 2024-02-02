@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from dataset_features import features, features_to_encode, important_features
+from dataset_features import features, features_to_encode, rf_important_features, shap_snn_important_features, shap_rnn_important_features, shap_drnn_important_features
 from attacks_categories import u2r_attacks, r2l_attacks, dos_attacks, probe_attacks
 from sklearn.preprocessing import MinMaxScaler
 from utility import get_dataset_path
@@ -57,14 +57,13 @@ def create_dataset_only_dos_probe_attack(datasetPath, pathWriteNewDS, datasetTyp
     df.to_csv(pathWriteNewDS + "KDD" + datasetType + "OnlyDoSProbe", index=False)
     print("dataset creato con successo")
 
-#this func create a dataset with only 15 most importat features selected by Random Forest, dataset to pass: OnlyDoSProbe
-def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_type):
+#this func create a dataset with only most important features selected by Random Forest or by shap
+#dataset to pass: OnlyDoSProbe
+def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_type, extractor_name, important_features):
     df = pd.read_csv(datasetPath)
     df.columns = features[ : -1]
     df = df[important_features]
-    print(df.shape)
-    print(df.columns)
-    df.to_csv(pathWriteNewDS + "KDD" + dataset_type + "ImportantFeatures", index=False)
+    df.to_csv(pathWriteNewDS + "KDD" + dataset_type + extractor_name + "ImportantFeatures", index=False)
     print("dataset creato con successo")
 
 #this func create a dataset with 0-1 lables for binary classification, dataset to pass: OnlyDoSProbe or ImportantFeatures
@@ -93,12 +92,27 @@ pathWriteNewDS = cwd + "\\NSL-KDD\\"
 '''create_dataset_only_dos_probe_attack(pathRawTrain,pathWriteNewDS, "Train")
 create_dataset_only_dos_probe_attack(pathRawTest,pathWriteNewDS, "Test")'''
 
-'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train")
-create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test")'''
 
-create_dataset_with_binary_labels(pathODPTrain,pathWriteNewDS, "Train", "OnlyDoSProbe")
+
+
+'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "RF", rf_important_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "RF", rf_important_features)'''
+
+'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPSNN", shap_snn_important_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPSNN", shap_snn_important_features)'''
+
+'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPRNN", shap_rnn_important_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPRNN", shap_rnn_important_features)'''
+
+'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPDRNN", shap_drnn_important_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPDRNN", shap_drnn_important_features)'''
+
+
+
+
+'''create_dataset_with_binary_labels(pathODPTrain,pathWriteNewDS, "Train", "OnlyDoSProbe")
 create_dataset_with_binary_labels(pathODPTest,pathWriteNewDS, "Test", "OnlyDoSProbe")
 
 create_dataset_with_binary_labels(pathIFTrain,pathWriteNewDS, "Train", "ImportantFeatures")
-create_dataset_with_binary_labels(pathIFTest,pathWriteNewDS, "Test", "ImportantFeatures")
+create_dataset_with_binary_labels(pathIFTest,pathWriteNewDS, "Test", "ImportantFeatures")'''
 

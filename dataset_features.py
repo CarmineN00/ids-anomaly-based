@@ -46,7 +46,7 @@ features_to_encode = ['protocol_type',
 'service',
  'flag']
 
-important_features = (['src_bytes', 
+rf_important_features = (['src_bytes', 
 'same_srv_rate',
 'flag',
 'diff_srv_rate',
@@ -63,3 +63,47 @@ important_features = (['src_bytes',
 'srv_count',
 'labels'])
 
+shap_snn_important_features = (['dst_host_rerror_rate',  
+'src_bytes',                                                             
+'flag',                                                                  
+'dst_host_srv_count',				 
+'dst_host_same_srv_rate',                                                 
+'count',                                                                    
+'protocol_type',							     
+'dst_host_same_src_port_rate',						    
+'dst_host_count',
+'service',
+'serror_rate', 
+'rerror_rate',
+'dst_host_srv_serror_rate'
+])
+
+shap_rnn_important_features = (['src_bytes', 
+'flag',
+'rerror_rate',
+'dst_host_srv_serror_rate',
+'dst_host_srv_rerror_rate',
+'protocol_type',
+'dst_host_diff_srv_rate',
+'diff_srv_rate',
+'serror_rate',
+'dst_host_serror_rate',
+'srv_rerror_rate',
+'srv_serror_rate',
+'dst_host_count', 
+'srv_count'
+])
+
+shap_drnn_important_features = (['logged_in', 
+'same_srv_rate',
+'dst_host_same_srv_rate',
+'dst_host_srv_serror_rate',
+'dst_host_rerror_rate',
+'dst_host_serror_rate',
+'srv_rerror_rate',
+'service',
+'diff_srv_rate',
+'dst_host_diff_srv_rate',
+'rerror_rate',
+'srv_count'
+])
