@@ -2,6 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 from dataset_features import features, features_to_encode, rf_important_features, shap_snn_important_features, shap_rnn_important_features, shap_drnn_important_features
+from dataset_features import shap_snn_impactful_features, shap_rnn_impactful_features, shap_drnn_impactful_features
 from attacks_categories import u2r_attacks, r2l_attacks, dos_attacks, probe_attacks
 from sklearn.preprocessing import MinMaxScaler
 from utility import get_dataset_path
@@ -63,7 +64,7 @@ def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_
     df = pd.read_csv(datasetPath)
     df.columns = features[ : -1]
     df = df[important_features]
-    df.to_csv(pathWriteNewDS + "KDD" + dataset_type + extractor_name + "ImportantFeatures", index=False)
+    df.to_csv(pathWriteNewDS + "KDD" + dataset_type + extractor_name + "ImpactfulFeatures", index=False)
     print("dataset creato con successo")
 
 #this func create a dataset with 0-1 lables for binary classification, dataset to pass: OnlyDoSProbe or ImportantFeatures
@@ -99,13 +100,22 @@ create_dataset_only_dos_probe_attack(pathRawTest,pathWriteNewDS, "Test")'''
 create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "RF", rf_important_features)'''
 
 '''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPSNN", shap_snn_important_features)
-create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPSNN", shap_snn_important_features)'''
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPSNN", shap_snn_important_features)
 
-'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPRNN", shap_rnn_important_features)
-create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPRNN", shap_rnn_important_features)'''
+create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPRNN", shap_rnn_important_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPRNN", shap_rnn_important_features)
 
-'''create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPDRNN", shap_drnn_important_features)
+create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPDRNN", shap_drnn_important_features)
 create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPDRNN", shap_drnn_important_features)'''
+
+create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPSNN", shap_snn_impactful_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPSNN", shap_snn_impactful_features)
+
+create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPRNN", shap_rnn_impactful_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPRNN", shap_rnn_impactful_features)
+
+create_dataset_with_important_features(pathODPTrain,pathWriteNewDS, "Train", "SHAPDRNN", shap_drnn_impactful_features)
+create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAPDRNN", shap_drnn_impactful_features)
 
 
 

@@ -27,7 +27,10 @@ class DeepRecurrentNeuralNetwork:
         accuracy = self.model.evaluate(x_test_reshaped, y_test, verbose=verbose)[1]
         return accuracy
     
-    def plot_important_features(self, x_test, class_index):
+    def plot_important_features(self, x_test, class_index=None):
         explainer = shap.KernelExplainer(self.model.predict,x_test)
         shap_values = explainer.shap_values(x_test)
-        shap.summary_plot(shap_values[class_index], x_test, class_names=["Normale", "DoS", "Probe"], max_display=x_test.shape[1])
+        if(class_index != None):
+            shap.summary_plot(shap_values[class_index], x_test, class_names=["Normale", "DoS", "Probe"], max_display=x_test.shape[1])
+        else:
+            shap.summary_plot(shap_values, x_test, class_names=["Normale", "DoS", "Probe"], max_display=x_test.shape[1])
