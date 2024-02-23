@@ -75,8 +75,8 @@ shap_snn_important_features = (['dst_host_rerror_rate',
 'service',
 'serror_rate', 
 'rerror_rate',
-'dst_host_srv_serror_rate'
-])
+'dst_host_srv_serror_rate',
+'labels'])
 
 shap_rnn_important_features = (['src_bytes', 
 'flag',
@@ -91,8 +91,8 @@ shap_rnn_important_features = (['src_bytes',
 'srv_rerror_rate',
 'srv_serror_rate',
 'dst_host_count', 
-'srv_count'
-])
+'srv_count',
+'labels'])
 
 shap_drnn_important_features = (['logged_in', 
 'same_srv_rate',
@@ -105,8 +105,8 @@ shap_drnn_important_features = (['logged_in',
 'diff_srv_rate',
 'dst_host_diff_srv_rate',
 'rerror_rate',
-'srv_count'
-])
+'srv_count',
+'labels'])
 
 shap_snn_impactful_features = (['dst_host_rerror_rate', 
 'src_bytes',
@@ -122,8 +122,8 @@ shap_snn_impactful_features = (['dst_host_rerror_rate',
 'dst_host_count',
 'rerror_rate',
 'srv_count',
-'srv_serror_rate'
-])
+'srv_serror_rate',
+'labels'])
 
 shap_rnn_impactful_features = (['dst_bytes', 
 'same_srv_rate',
@@ -139,8 +139,8 @@ shap_rnn_impactful_features = (['dst_bytes',
 'service',
 'flag',
 'dst_host_serror_rate',
-'protocol_type'
-])
+'protocol_type',
+'labels'])
 
 shap_drnn_impactful_features = (['dst_bytes', 
 'dst_host_rerror_rate',
@@ -156,5 +156,5 @@ shap_drnn_impactful_features = (['dst_bytes',
 'dst_host_serror_rate',
 'protocol_type',
 'dst_host_same_srv_rate',
-'count'
-])
+'count',
+'labels'])
