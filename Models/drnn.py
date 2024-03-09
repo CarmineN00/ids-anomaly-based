@@ -13,7 +13,8 @@ class DeepRecurrentNeuralNetwork(Sequential):
 
     def build_model(self):
         self.add(LSTM(41, input_shape=(self.input_dim, 1), dropout=0.2, return_sequences=True))
-        self.add(LSTM(20, dropout=0.2))
+        self.add(LSTM(20, dropout=0.2, return_sequences=True))
+        self.add(LSTM(10, dropout=0.2))
         self.add(Dense(units=self.num_classes, activation=self.activation)) 
         self.compile(loss=self.loss_fun, optimizer='adam', metrics=['accuracy'])
     
