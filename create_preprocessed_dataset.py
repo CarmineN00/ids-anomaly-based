@@ -67,22 +67,37 @@ def create_dataset_with_important_features(datasetPath, pathWriteNewDS, dataset_
     df.to_csv(pathWriteNewDS + "KDD" + dataset_type + extractor_name + "ImpactfulFeatures", index=False)
     print("dataset creato con successo")
 
-#this func create a dataset with 0-1 lables for binary classification, dataset to pass: OnlyDoSProbe or ImportantFeatures
+#this func create a dataset with 0-1 lables for binary classification, dataset to pass: OnlyDoSProbe or RFImportantFeatures or ShapImportantFeatures
 def create_dataset_with_binary_labels(datasetPath, pathWriteNewDS, dataset_type, category):
     df = pd.read_csv(datasetPath)
     last_column = df.columns[-1]
     df[last_column] = df[last_column].replace(2, 1)
     df.to_csv(pathWriteNewDS + "KDD" + dataset_type + "Binary" + category , index=False)
+    print("dataset creato con successo")
 
 
 '''pathRawTrain = get_dataset_path("Train")
 pathRawTest = get_dataset_path("Test")'''
 
+#OnlyDosProbe
 pathODPTrain = get_dataset_path("TrainOnlyDoSProbe")
 pathODPTest = get_dataset_path("TestOnlyDoSProbe")
 
-pathIFTrain = get_dataset_path("TrainImportantFeatures")
-pathIFTest = get_dataset_path("TestImportantFeatures")
+#RandomForest
+pathRFIFTrain = get_dataset_path("TrainRFImportantFeatures")
+pathRFIFTest = get_dataset_path("TestRFImportantFeatures")
+
+#SHAP SNN
+pathSHAPSNNIFTrain = get_dataset_path("TrainSHAPSNNImpactfulFeatures")
+pathSHAPSNNIFTest = get_dataset_path("TestSHAPSNNImpactfulFeatures")
+
+#SHAP RNN
+pathSHAPRNNIFTrain = get_dataset_path("TrainSHAPRNNImpactfulFeatures")
+pathSHAPRNNIFTest = get_dataset_path("TestSHAPRNNImpactfulFeatures")
+
+#SHAP DRNN
+pathSHAPDRNNIFTrain = get_dataset_path("TrainSHAPDRNNImpactfulFeatures")
+pathSHAPDRNNIFTest = get_dataset_path("TestSHAPDRNNImpactfulFeatures")
 
 #get current work directory
 cwd = os.getcwd()
@@ -123,6 +138,20 @@ create_dataset_with_important_features(pathODPTest,pathWriteNewDS, "Test", "SHAP
 '''create_dataset_with_binary_labels(pathODPTrain,pathWriteNewDS, "Train", "OnlyDoSProbe")
 create_dataset_with_binary_labels(pathODPTest,pathWriteNewDS, "Test", "OnlyDoSProbe")
 
-create_dataset_with_binary_labels(pathIFTrain,pathWriteNewDS, "Train", "ImportantFeatures")
-create_dataset_with_binary_labels(pathIFTest,pathWriteNewDS, "Test", "ImportantFeatures")'''
+create_dataset_with_binary_labels(pathRFIFTrain,pathWriteNewDS, "Train", "RFImportantFeatures")
+create_dataset_with_binary_labels(pathRFIFTest,pathWriteNewDS, "Test", "RFImportantFeatures")
+
+create_dataset_with_binary_labels(pathSHAPSNNIFTrain,pathWriteNewDS, "Train", "SHAPSNNImpactfulFeatures")
+create_dataset_with_binary_labels(pathSHAPSNNIFTest,pathWriteNewDS, "Test", "SHAPSNNImpactfulFeatures")
+
+create_dataset_with_binary_labels(pathSHAPRNNIFTrain,pathWriteNewDS, "Train", "SHAPRNNImpactfulFeatures")
+create_dataset_with_binary_labels(pathSHAPRNNIFTest,pathWriteNewDS, "Test", "SHAPRNNImpactfulFeatures")'''
+
+create_dataset_with_binary_labels(pathSHAPDRNNIFTrain,pathWriteNewDS, "Train", "SHAPDRNNImpactfulFeatures")
+create_dataset_with_binary_labels(pathSHAPDRNNIFTest,pathWriteNewDS, "Test", "SHAPDRNNImpactfulFeatures")
+
+
+
+
+
 
