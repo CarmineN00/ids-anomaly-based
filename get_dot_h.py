@@ -5,19 +5,26 @@ from keras.models import load_model
 from utility import get_dataset_path, get_dataframe_split
 from everywhereml.code_generators.tensorflow import convert_model
 
-pathDSTrain = get_dataset_path("TrainSHAPSNNImportantFeatures")
-pathDSTest = get_dataset_path("TestSHAPSNNImportantFeatures")
+pathDSTrain = get_dataset_path("TrainSHAPSNNImpactfulFeatures")
+pathDSTest = get_dataset_path("TestSHAPSNNImpactfulFeatures")
+
+'''pathDSTrain = get_dataset_path("TrainBinarySHAPSNNImpactfulFeatures")
+pathDSTest = get_dataset_path("TestBinarySHAPSNNImpactfulFeatures")'''
 
 x_train , y_train = get_dataframe_split(pathDSTrain)
 x_test , y_test = get_dataframe_split(pathDSTest)
 
-#one hot encode labels to adapt with model converter
-'''x_test = np.asarray(x_test)
+#one hot encode labels to adapt with model converter multiclass
+x_test = np.asarray(x_test)
 y_test = np.asarray(y_test)
-
 y_test = np.zeros((len(y_test), 3), dtype=int)
 for i in range(len(y_test)):
-    y_test[i, y_test[i]] = 1'''
+    y_test[i, y_test[i]] = 1
+
+#one hot encode labels to adapt with model converter binary
+'''x_test = np.asarray(x_test)
+y_test = np.asarray(y_test)
+y_test = np.eye(2)[y_test].astype(int)'''
 
 #avoid the custom layer problem snn
 '''model = Sequential()
@@ -25,7 +32,7 @@ model.add(Dense(41, input_dim=x_train.shape[1], activation='relu'))
 model.add(Dense(20, activation='relu'))
 model.add(Dense(units=3, activation="softmax")) 
 model.compile(loss="sparse_categorical_crossentropy", optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=5, batch_size=32, verbose=0)
+model.fit(x_train, y_train, epochs=5, batch_size=32, verbose=1)
 model.save("TrainedModels\\SHAPSNNImportantFeatures.h5")'''
 
 #convert a snn trained model in .h module
