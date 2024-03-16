@@ -49,7 +49,7 @@ void setup() {
         total_time += elapsed_time;
     }
 
-    unsigned long average_time = total_time / sizeof(samples[0]);
+    unsigned long average_time = (total_time / (sizeof(samples) / sizeof(samples[0])));
     Serial.print("Accuracy: ");
     Serial.print(correct);
     Serial.println("%");
